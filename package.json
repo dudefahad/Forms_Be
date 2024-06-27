@@ -1,0 +1,22 @@
+{
+  "name": "gfc-backend",
+  "version": "1.0.0",
+  "description": "google-form-clone cackend application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile:node":"tsc",
+    "start": "npm run compile:node && nodemon dist/app.js"
+  },
+  "author": "sudeep-manasali",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.9",
+    "nodemon": "^3.1.4"
+  }
+}
