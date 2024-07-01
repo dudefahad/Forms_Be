@@ -1,6 +1,5 @@
 import express from 'express';
 import { createNewDocument, getAllDocumentIds, getGoogleDocumentByIdController, updateDocument } from '../controllers/google-document';
-import { UserAuth } from '../common/user-authorisation';
 
 const router = express.Router();
 

@@ -5,13 +5,13 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 export const getUserByIdController = (req: Request, res: Response) => {
-  Users.find({ username: 'Sudeep Manasali' })
+  Users.find({ username: req.params.id })
     .then((result: any) => {
       logger.info(`User logged in successfully..!`);
       res.status(200).send(result);
     })
-    .catch((err: any) => {
-      logger.error(`Error in fetching the user data ${"username"}, ${err?.message}`,);
+    .catch((error: any) => {
+      logger.error(`Error in fetching the user data, ${error?.message}`,);
     });
 }
 
@@ -19,7 +19,6 @@ export const signUpUserController = (req: Request, res: Response) => {
   try {
     let user = new Users(req.body);
     Users.find({ email: req.body.email }).then((response: any) => {
-      console.log(response);
       if (response.length > 0) {
         res.status(403).send('User already exists, try new email address');
       } else {
@@ -34,8 +33,8 @@ export const signUpUserController = (req: Request, res: Response) => {
         });
       }
     })
-  } catch (err) {
-    logger.error("Unable to create the user, ", req.body.email, err);
+  } catch (error) {
+    logger.error("Unable to create the user, ", req.body.email, error);
     res.status(500).send("Internal Server Error");
   }
 }

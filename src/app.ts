@@ -38,11 +38,10 @@ app.use((req: any, res: any, next: any) => {
   }
   req.userId = decodedToken.userId;
   req.isUserAuth = true;
-  console.log(req.isUserAuth);
   next();
 });
 
-// documents routes
+// document routes
 app.use(questionsRouter);
 
 mongoose.connect("mongodb+srv://sudeep_manasali:Sudeep%401234@googleformclone.urebd.mongodb.net/google_form_clone?retryWrites=true&w=majority")

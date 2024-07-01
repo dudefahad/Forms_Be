@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import { logger } from "../common/pino";
 const Document = require('../models/google-document');
 
@@ -19,8 +18,7 @@ export const getGoogleDocumentByIdController = (req: any, res: any) => {
   }
 }
 
-
-// retreives all the documents
+// retreives all the documents data
 export const getAllDocumentIds = (req: any, res: any) => {
 
   if (!req?.isUserAuth) {
@@ -37,7 +35,7 @@ export const getAllDocumentIds = (req: any, res: any) => {
   });
 }
 
-// creates a new document
+// creates new document
 export const createNewDocument = (req: any, res: any) => {
   if (!req?.isUserAuth) {
     res.status(401).send({ message: "Unauthorised resource access..!" });
@@ -56,7 +54,7 @@ export const createNewDocument = (req: any, res: any) => {
   }
 }
 
-// update a new document
+// update the document
 export const updateDocument = (req: any, res: any) => {
   if (!req?.isUserAuth) {
     res.status(401).send({ message: "Unauthorised resource access..!" });
@@ -68,7 +66,7 @@ export const updateDocument = (req: any, res: any) => {
     updatedOn: req.body.updatedOn
   };
 
-  Document.findByIdAndUpdate((req.body._id).trim(), { $set: document }, { new: false }).then((response: any) => {
+  Document.findByIdAndUpdate((req.body._id).trim(), { $set: document }, { new: false }).then(() => {
     logger.info(`Document ${req.body._id} is updated successfully`)
     res.status(200).send({ code: 200, message: 'Updated successfully' });
   }).catch((error: any) => {
