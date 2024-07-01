@@ -11,12 +11,38 @@ const constants_1 = require("./common/constants");
 const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const pino_1 = require("./common/pino");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const app = (0, express_1.default)();
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use((0, cors_1.default)(constants_1.corsConfig));
-app.use(google_document_1.default);
 app.use(user_1.default);
+app.use((req, res, next) => {
+    const authHeader = req.get("Authorization");
+    console.log(authHeader);
+    if (!authHeader) {
+        req.isUserAuth = false;
+        return next();
+    }
+    const token = authHeader;
+    let decodedToken;
+    try {
+        decodedToken = jsonwebtoken_1.default.verify(token, "somesupersecretsecret");
+    }
+    catch (err) {
+        req.isUserAuth = false;
+        return next();
+    }
+    if (!decodedToken) {
+        req.isUserAuth = false;
+        return next();
+    }
+    req.userId = decodedToken.userId;
+    req.isUserAuth = true;
+    console.log(req.isUserAuth);
+    next();
+});
+app.use(google_document_1.default);
 mongoose_1.default.connect("mongodb+srv://sudeep_manasali:Sudeep%401234@googleformclone.urebd.mongodb.net/google_form_clone?retryWrites=true&w=majority")
     .then(() => {
     pino_1.logger.info("Moongoose connected successfully...");
