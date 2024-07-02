@@ -4,7 +4,7 @@ import { createNewDocument, getAllDocumentIds, getGoogleDocumentByIdController, 
 const router = express.Router();
 
 router.get('/document/:documentId', getGoogleDocumentByIdController);
-router.get('/documents', getAllDocumentIds);
+router.post('/documents', getAllDocumentIds);
 router.post('/create-document', createNewDocument);
 router.put('/update-document', updateDocument);
 

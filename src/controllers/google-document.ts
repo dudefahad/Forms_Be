@@ -20,12 +20,11 @@ export const getGoogleDocumentByIdController = (req: any, res: any) => {
 
 // retreives all the documents data
 export const getAllDocumentIds = (req: any, res: any) => {
-
   if (!req?.isUserAuth) {
     res.status(401).send({ message: "Unauthorised resource access..!" });
   }
 
-  Document.find({}, { documentName: true, _id: true, createdOn: true }).then((response: any) => {
+  Document.find({ createdBy: req.body.username }, { documentName: true, _id: true, createdOn: true, updatedOn: true }).then((response: any) => {
     res.status(200).send({
       documents: response
     });

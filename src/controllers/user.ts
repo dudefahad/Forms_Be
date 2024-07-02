@@ -66,7 +66,7 @@ export const signInUserController = (req: Request, res: Response) => {
               "somesupersecretsecret",
               { expiresIn: "1d" }
             );
-            logger.info(`User logged in successfully: `, { email, username });
+            logger.info(`User logged in successfully`, { email, username });
             res.status(200).json({
               message: "Logged In",
               token: token,

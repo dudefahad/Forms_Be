@@ -13,9 +13,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors(corsConfig));
 
-// routes for user
-app.use(userRouter);
-
 // for user authentication 
 app.use((req: any, res: any, next: any) => {
   const authHeader = req.get("Authorization");
@@ -40,6 +37,9 @@ app.use((req: any, res: any, next: any) => {
   req.isUserAuth = true;
   next();
 });
+
+// routes for user
+app.use(userRouter);
 
 // document routes
 app.use(questionsRouter);
