@@ -74,7 +74,7 @@ export const updateDocument = (req: any, res: any) => {
   });
 }
 
-export const deleteDcouemnt = (req: any, res: any) => {
+export const deleteDocument = (req: any, res: any) => {
   if (!req.isUserAuth) {
     res.status(401).send({ message: "Unauthorised resource access..!" });
   }

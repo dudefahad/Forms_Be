@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-    createNewDocument, deleteDcouemnt, getAllDocumentIds,
+    createNewDocument, deleteDocument, getAllDocumentIds,
     getGoogleDocumentByIdController, updateDocument
 } from '../controllers/google-document';
 
@@ -10,6 +10,6 @@ router.get('/document/:documentId', getGoogleDocumentByIdController);
 router.post('/documents', getAllDocumentIds);
 router.post('/create-document', createNewDocument);
 router.put('/update-document', updateDocument);
-router.delete('/delete/:documentId', deleteDcouemnt);
+router.delete('/delete/:documentId', deleteDocument);
 
 export default router;
