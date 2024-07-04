@@ -7,7 +7,7 @@ export const getGoogleDocumentByIdController = (req: any, res: any) => {
     res.status(401).send({ message: "Unauthorised resource access..!" });
   } else {
     Document.find({ _id: req.params.documentId }).then((response: any) => {
-      logger.info(`User fetched data, ${response}`);
+      logger.info(`User fetched data`);
       res.status(200).send({
         document: response[0]
       });
@@ -73,3 +73,18 @@ export const updateDocument = (req: any, res: any) => {
     res.status(500).send("Internal Server Error");
   });
 }
+
+export const deleteDcouemnt = (req: any, res: any) => {
+  if (!req.isUserAuth) {
+    res.status(401).send({ message: "Unauthorised resource access..!" });
+  }
+
+  let documentId = req.params?.documentId;
+  Document.deleteOne({ _id: documentId }).then(() => {
+    logger.error("Document deleted successfully..", req.body._id);
+    res.status(200).json({ msg: "Record Deleted Successfully..." });
+  }).catch((error: any) => {
+    logger.error("Unable to delete the document,", req.body._id, error);
+    res.json({ msg: "unable to delete the document...!" });
+  });
+};
