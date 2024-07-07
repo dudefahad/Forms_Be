@@ -51,8 +51,13 @@ app.use(userResponseRouter);
 mongoose.connect("mongodb+srv://sudeep_manasali:Sudeep%401234@googleformclone.urebd.mongodb.net/google_form_clone?retryWrites=true&w=majority")
   .then(() => {
     logger.info("Moongoose connected successfully...");
-    app.listen(process.env.PORT || 9000, () => {
+    const server = app.listen(process.env.PORT || 9000, () => {
       logger.info(`Express server is up and running`);
+    });
+
+    const io = require('./common/Socket').init(server);
+    io.on("connection", (socket: any) => {
+      logger.info(`Socket connected: ${socket.id}`,);
     });
   })
   .catch((err) => {
