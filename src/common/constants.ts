@@ -1,6 +1,6 @@
 
 export const corsConfig = {
-  origin: ['http://localhost:3000'],
+  origin: ['http://localhost:3000', 'https://gf-clone-c266a.web.app/'],
   allowedHeaders: [
     "Authorization",
     "X-Requested-With",
