@@ -1,7 +1,10 @@
 import mongoose, { Schema } from "mongoose";
-import { QUESTION_SCHEMA } from "./question";
 
-const DOCUMENT_SCHEMA = new mongoose.Schema({
+const USER_RESPONSE_SCHEMA = new mongoose.Schema({
+    documentId: {
+        type: Object,
+        required: true
+    },
     documentName: {
         type: String,
         required: true
@@ -10,22 +13,19 @@ const DOCUMENT_SCHEMA = new mongoose.Schema({
         type: String,
         required: true
     },
-    createdBy: {
+    userId: {
+        type: Object,
+        required: true
+    },
+    username: {
         type: String,
         required: true
     },
-    createdByUserID: {
-        type: Object
-    },
-    createdOn: {
+    submittedOn: {
         type: String,
         required: true
     },
-    updatedOn: {
-        type: String,
-        required: true
-    },
-    questions: [QUESTION_SCHEMA]
+    answers: {}
 });
 
-module.exports = mongoose.model("Document", DOCUMENT_SCHEMA);
+module.exports = mongoose.model("UserResponse", USER_RESPONSE_SCHEMA);

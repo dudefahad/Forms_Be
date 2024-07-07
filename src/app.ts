@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import questionsRouter from './routes/google-document';
 import userRouter from './routes/user';
+import userResponseRouter from './routes/user-response';
 import { corsConfig } from './common/constants';
 import cors from "cors";
 import mongoose from 'mongoose';
@@ -43,6 +44,9 @@ app.use(userRouter);
 
 // document routes
 app.use(questionsRouter);
+
+//collecting user responses
+app.use(userResponseRouter);
 
 mongoose.connect("mongodb+srv://sudeep_manasali:Sudeep%401234@googleformclone.urebd.mongodb.net/google_form_clone?retryWrites=true&w=majority")
   .then(() => {

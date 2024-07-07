@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const OPTION_SCHEMA = new mongoose.Schema({
-  _id: { type: Object, auto: false },
   option: {
     type: String,
     required: true
