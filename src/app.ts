@@ -3,12 +3,14 @@ import bodyParser from 'body-parser';
 import questionsRouter from './routes/google-document';
 import userRouter from './routes/user';
 import userResponseRouter from './routes/user-response';
-import { corsConfig } from './common/constants';
+import { corsConfig, REQUEST_FAILURE_MESSAGES, REQUEST_SUCCESS_MESSAGE, SECRET_KEY, SOCKET_EVENTS } from './common/constants';
 import cors from "cors";
 import mongoose from 'mongoose';
 import { logger } from './common/pino';
 import jwt from "jsonwebtoken";
 
+const AUTHORISATION = "Authorization";
+const SOCKET_CONNECTED = "Socket connected: ";
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -16,7 +18,7 @@ app.use(cors(corsConfig));
 
 // for user authentication 
 app.use((req: any, res: any, next: any) => {
-  const authHeader = req.get("Authorization");
+  const authHeader = req.get(AUTHORISATION);
   if (!authHeader) {
     req.isUserAuth = false;
     return next();
@@ -25,7 +27,7 @@ app.use((req: any, res: any, next: any) => {
   const token = authHeader;
   let decodedToken: any;
   try {
-    decodedToken = jwt.verify(token, "somesupersecretsecret");
+    decodedToken = jwt.verify(token, SECRET_KEY);
   } catch (err) {
     req.isUserAuth = false;
     return next();
@@ -50,18 +52,18 @@ app.use(userResponseRouter);
 
 mongoose.connect("mongodb+srv://sudeep_manasali:Sudeep%401234@googleformclone.urebd.mongodb.net/google_form_clone?retryWrites=true&w=majority")
   .then(() => {
-    logger.info("Moongoose connected successfully...");
+    logger.info(REQUEST_SUCCESS_MESSAGE.DATABASE_CONNECTED_SUCCESSFULLY);
     const server = app.listen(process.env.PORT || 9000, () => {
-      logger.info(`Express server is up and running`);
+      logger.info(REQUEST_SUCCESS_MESSAGE.APP_STARTED);
     });
 
     const io = require('./common/Socket').init(server);
-    io.on("connection", (socket: any) => {
-      logger.info(`Socket connected: ${socket.id}`,);
+    io.on(SOCKET_EVENTS.CONNECTION, (socket: any) => {
+      logger.info(SOCKET_CONNECTED, socket.id);
     });
   })
   .catch((err) => {
-    logger.error("Unable to connect the monog-db database ", err);
-    logger.error("App crashed");
+    logger.error(REQUEST_FAILURE_MESSAGES.ERROR_IN_CONNECTING_DB, err);
+    logger.error(REQUEST_FAILURE_MESSAGES.APP_CRASHED);
     process.exit();
   });
