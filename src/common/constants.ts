@@ -5,7 +5,7 @@ export const corsConfig = {
     "Authorization",
     "X-Requested-With",
     "Content-Type",
-    "x-auth-token",
+    "x-auth-token"
   ],
   maxAge: 86400, // NOTICE: 1 day
   credentials: false
@@ -38,7 +38,7 @@ export const enum REQUEST_FAILURE_MESSAGES {
   ERROR_INSAVING_USER_RESPONSE = "Error in saving the user response",
   APP_CRASHED = "App crashed",
   ERROR_IN_CONNECTING_DB = "Unable to connect the monog-db database",
-  UNABLE_TO_UPDATE_DOCUMENT = "Unable to updae document, ",
+  UNABLE_TO_UPDATE_DOCUMENT = "Unable to update document, ",
   ERROR_IN_FECTING_THE_DOCUMENT = "Error in fetching the documents,",
   ERROR_IN_CREATING_NEW_DOCUMENT = "Error in creating new document"
 }
@@ -54,7 +54,7 @@ export const enum SOCKET_EVENTS {
 export const enum API_REQUEST_ROUTES {
   GET_USER_BY_ID = '/:id',
   USER_LOGIN = '/login',
-  USER_REGISTER = '/login',
+  USER_REGISTER = '/register',
   GET_DOCUMENT_BY_DOCUMENT_ID = '/document/:documentId',
   GET_ALL_DOCUMENTS = '/documents',
   CREATE_NEW_DOCUMENT = '/create-document',
