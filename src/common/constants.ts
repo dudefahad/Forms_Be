@@ -1,6 +1,6 @@
 
 export const corsConfig = {
-  origin: '*,
+  origin: '*',
   allowedHeaders: [
     "Authorization",
     "X-Requested-With",
