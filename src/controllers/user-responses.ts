@@ -12,7 +12,7 @@ export const getUserResponseController = (req: Request, res: Response) => {
       });
     }).catch((error: any) => {
       logger.error(REQUEST_FAILURE_MESSAGES.ERROR_IN_FETCHING_USER_RESPONSE, error.message);
-      res.status(500).json(error);
+      res.status(500).json({ "message": REQUEST_FAILURE_MESSAGES.ERROR_IN_FETCHING_USER_RESPONSE });
     });
 }
 
@@ -24,12 +24,12 @@ export const fetchUserResponseData = (req: Request, res: Response) => {
       });
     }).catch((error: any) => {
       logger.error(REQUEST_FAILURE_MESSAGES.ERROR_IN_FETCHING_USER_RESPONSE, error.message);
-      res.status(500).json(error);
+      res.status(500).json({ "message": REQUEST_FAILURE_MESSAGES.ERROR_IN_FETCHING_USER_RESPONSE });
     });
 }
 
 export const saveUserResponseController = (req: any, res: any) => {
-  let userResponse = new UserReponse(req.body);
+  let userResponse = req.body;
 
   UserReponse.findOneAndUpdate({ userId: req.body.userId, documentId: req.body.documentId },
     { $set: userResponse },
@@ -43,6 +43,6 @@ export const saveUserResponseController = (req: any, res: any) => {
       });
     }).catch((error: any) => {
       logger.error(REQUEST_FAILURE_MESSAGES.ERROR_INSAVING_USER_RESPONSE, `${req.body.username}, ${error.message}`);
-      res.status(500).json(error);
+      res.status(500).json({ "message": REQUEST_FAILURE_MESSAGES.ERROR_INSAVING_USER_RESPONSE });
     });
 }
