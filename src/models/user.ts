@@ -18,8 +18,9 @@ const USER_SCHEMA = new mongoose.Schema({
     required: true
   },
   createdOn: {
-    type: String
+    type: Date,
+    default: Date.now
   }
 });
 
-module.exports = mongoose.model("Users", USER_SCHEMA);
+module.exports = mongoose.model("User", USER_SCHEMA);

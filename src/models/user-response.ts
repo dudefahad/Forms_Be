@@ -2,28 +2,18 @@ import mongoose, { Schema } from "mongoose";
 
 const USER_RESPONSE_SCHEMA = new mongoose.Schema({
     documentId: {
-        type: Object,
-        required: true
-    },
-    documentName: {
-        type: String,
-        required: true
-    },
-    documentDescription: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Document',
         required: true
     },
     userId: {
-        type: Object,
-        required: true
-    },
-    username: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     submittedOn: {
-        type: String,
-        required: true
+        type: Date,
+        default: Date.now
     },
     answers: {}
 });

@@ -1,11 +1,10 @@
 import { Server } from "socket.io";
+import { corsConfig } from "./constants";
 let io: any;
 
 export const init = (httpServer: any) => {
   io = new Server(httpServer, {
-    cors: {
-      origin: "*"
-    }
+    cors: corsConfig
   });
   return io;
 }

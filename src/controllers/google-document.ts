@@ -2,6 +2,7 @@ import { REQUEST_FAILURE_MESSAGES, REQUEST_SUCCESS_MESSAGE, UNAUTHORIZED_ACCESS 
 import { logger } from "../common/pino";
 const Document = require('../models/google-document');
 
+let mongoose = require("mongoose");
 // retreives one the document
 export const getGoogleDocumentByIdController = (req: any, res: any) => {
   if (!req?.isUserAuth) {
@@ -24,14 +25,14 @@ export const getAllDocumentIds = (req: any, res: any) => {
   if (!req?.isUserAuth) {
     res.status(401).send({ message: UNAUTHORIZED_ACCESS });
   }
-
-  Document.find({ createdBy: req.body.username }, { documentName: true, _id: true, createdOn: true, updatedOn: true }).then((response: any) => {
+  req.body.userId = new mongoose.Types.ObjectId(req.body.userId);
+  Document.find({ createdByUserID: req.body.userId }, { documentName: true, _id: true, createdOn: true, updatedOn: true }).then((response: any) => {
     res.status(200).send({
       documents: response
     });
   }).catch((error: any) => {
     logger.error(REQUEST_FAILURE_MESSAGES.ERROR_IN_FECTING_THE_DOCUMENT, error.message);
-    res.status(500).json(error);
+    res.status(500).send([]);
   });
 }
 
@@ -41,6 +42,8 @@ export const createNewDocument = (req: any, res: any) => {
     res.status(401).send({ message: UNAUTHORIZED_ACCESS });
   } else {
     let document = new Document(req.body);
+    req.body.createdByUserID = new mongoose.Types.ObjectId(req.body.createdByUserID);
+
     document.save().then((response: any) => {
       logger.info(REQUEST_SUCCESS_MESSAGE.DOCUMENT_CREATED_SUCCESSFULLY, response._id);
       res.status(201).send({

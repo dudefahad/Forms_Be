@@ -8,7 +8,7 @@ const OPTION_SCHEMA = new mongoose.Schema({
 });
 
 export const QUESTION_SCHEMA = new mongoose.Schema({
-  _id: { type: Object, auto: false },
+  _id: { type: mongoose.Schema.Types.ObjectId, auto: false },
   question: {
     type: String
   },

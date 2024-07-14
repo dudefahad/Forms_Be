@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import { QUESTION_SCHEMA } from "./question";
 
 const DOCUMENT_SCHEMA = new mongoose.Schema({
+    _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
     documentName: {
         type: String,
         required: true
@@ -10,20 +11,18 @@ const DOCUMENT_SCHEMA = new mongoose.Schema({
         type: String,
         required: true
     },
-    createdBy: {
-        type: String,
-        required: true
-    },
     createdByUserID: {
-        type: Object
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
     createdOn: {
-        type: String,
-        required: true
+        type: Date,
+        default: Date.now
     },
     updatedOn: {
-        type: String,
-        required: true
+        type: Date,
+        default: Date.now
     },
     questions: [QUESTION_SCHEMA]
 });
