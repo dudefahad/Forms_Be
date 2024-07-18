@@ -27,10 +27,27 @@ export const signUpUserController = (req: Request, res: Response) => {
       } else {
         bcrypt.hash(user.password, 12).then((hashedPassword: string) => {
           user.password = hashedPassword;
-          user.save().then(() => {
+          user.save().then((response: any) => {
             logger.info(REQUEST_SUCCESS_MESSAGE.USER_CREATED_SUCCESSFULLY, req.body.email);
-            res.status(201).send({
-              message: REQUEST_SUCCESS_MESSAGE.USER_CREATED_SUCCESSFULLY
+
+            const token = jwt.sign(
+              {
+                email: response.email,
+                username: response.username,
+                userId: response._id.toString()
+              },
+              SECRET_KEY,
+              { expiresIn: ONE_DAY }
+            );
+
+            logger.info(REQUEST_SUCCESS_MESSAGE.USER_LOGGEDIN_SUCCESSFULLY, { email: response.email, username: response.username });
+
+            // login the user as soon as user logs in
+            res.status(200).json({
+              message: LOGGED_IN,
+              token: token,
+              userId: response._id.toString(),
+              data: { email: response.email, username: response.username }
             });
           });
         });
