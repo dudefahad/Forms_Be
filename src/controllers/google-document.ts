@@ -48,7 +48,12 @@ export const createNewDocument = (req: any, res: any) => {
       logger.info(REQUEST_SUCCESS_MESSAGE.DOCUMENT_CREATED_SUCCESSFULLY, response._id);
       res.status(201).send({
         message: REQUEST_SUCCESS_MESSAGE.DOCUMENT_CREATED_SUCCESSFULLY,
-        documentId: response._id
+        documentId: response._id,
+        document: {
+          documentName: response.documentName,
+          createdOn: response.createdOn,
+          updatedOn: response.updatedOn
+        }
       });
     }).catch((error: any) => {
       logger.error(REQUEST_FAILURE_MESSAGES.ERROR_IN_CREATING_NEW_DOCUMENT, req.body.createdBy, error.message);
@@ -86,7 +91,7 @@ export const deleteDocument = (req: any, res: any) => {
   let documentId = req.params?.documentId;
   Document.deleteOne({ _id: documentId }).then(() => {
     logger.error(REQUEST_SUCCESS_MESSAGE.DOCUMENT_DELETED_SUCCESSFULLY, req.body._id);
-    res.status(200).json({ msg: REQUEST_SUCCESS_MESSAGE.DOCUMENT_DELETED_SUCCESSFULLY });
+    res.status(200).json({ msg: REQUEST_SUCCESS_MESSAGE.DOCUMENT_DELETED_SUCCESSFULLY, documentId });
   }).catch((error: any) => {
     logger.error(REQUEST_FAILURE_MESSAGES.DOCUMENT_DELETION_FAILED, req.body._id, error);
     res.json({ msg: REQUEST_FAILURE_MESSAGES.DOCUMENT_DELETION_FAILED });
