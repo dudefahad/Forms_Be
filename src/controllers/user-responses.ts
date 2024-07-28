@@ -52,13 +52,19 @@ export const fetchUserResponseData = (req: Request, res: Response) => {
 }
 
 export const saveUserResponseController = (req: any, res: any) => {
-  let userResponse = req.body;
+  let userResponse = { ...req.body };
+  let username = req.body.username;
+  delete userResponse.username;
 
   UserReponse.findOneAndUpdate({ userId: req.body.userId, documentId: req.body.documentId },
     { $set: userResponse },
     { upsert: true, returnOriginal: false }).then((formResponse: any) => {
       logger.info(REQUEST_SUCCESS_MESSAGE.RESPONSE_SAVED_SUCCESSFULLY, formResponse._id);
-      getIo().emit(SOCKET_CHANNEL_NAMES.USER_RESPONSE, formResponse);
+      getIo().emit(SOCKET_CHANNEL_NAMES.USER_RESPONSE, {
+        userId: { _id: formResponse.userId, username },
+        submittedOn: formResponse.submittedOn,
+        documentId: formResponse.documentId
+      });
 
       res.status(201).send({
         message: REQUEST_SUCCESS_MESSAGE.RESPONSE_SAVED_SUCCESSFULLY,
