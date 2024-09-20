@@ -50,12 +50,22 @@ app.use(questionsRouter);
 //collecting user responses
 app.use(userResponseRouter);
 
-mongoose.connect("mongodb+srv://sudeep_manasali:Sudeep%401234@googleformclone.urebd.mongodb.net/google_form_clone?retryWrites=true&w=majority")
-  .then(() => {
+var options:any={
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false
+}
+
+// mongoose.connect("mongodb+srv://sudeep_manasali:Sudeep%401234@googleformclone.urebd.mongodb.net/google_form_clone?retryWrites=true&w=majority")
+// mongoose.connect("mongodb+srv://CollegeLogin:CollegeLogin@firstcluster.zr33pxh.mongodb.net/?retryWrites=true&w=majority&appName=Forms")  
+mongoose.connect("mongodb+srv://ameerfahadmca22:ameerfahadmca22@forms.ep9emns.mongodb.net/")  
+.then(() => {
     logger.info(REQUEST_SUCCESS_MESSAGE.DATABASE_CONNECTED_SUCCESSFULLY);
     const server = app.listen(process.env.PORT || 9000, () => {
       logger.info(REQUEST_SUCCESS_MESSAGE.APP_STARTED);
     });
+    console.log(server);
 
     const io = require('./common/Socket').init(server);
     io.on(SOCKET_EVENTS.CONNECTION, (socket: any) => {

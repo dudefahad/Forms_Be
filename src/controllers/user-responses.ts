@@ -65,7 +65,6 @@ export const saveUserResponseController = (req: any, res: any) => {
         submittedOn: formResponse.submittedOn,
         documentId: formResponse.documentId
       });
-
       res.status(201).send({
         message: REQUEST_SUCCESS_MESSAGE.RESPONSE_SAVED_SUCCESSFULLY,
         documentId: formResponse._id

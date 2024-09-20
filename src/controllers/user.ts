@@ -19,6 +19,7 @@ export const getUserByIdController = (req: Request, res: Response) => {
 }
 
 export const signUpUserController = (req: Request, res: Response) => {
+  console.log("here")
   try {
     let user = new Users(req.body);
     Users.find({ email: req.body.email }).then((response: any) => {

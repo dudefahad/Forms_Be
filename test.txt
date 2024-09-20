@@ -1,0 +1,33 @@
+
+// // import { corsConfig, REQUEST_FAILURE_MESSAGES, REQUEST_SUCCESS_MESSAGE, SECRET_KEY, SOCKET_EVENTS } from '/home/ameer/mp/ts_be/GFC-BE-APP/src/common/constants.ts';
+// // import mongoose from 'mongoose';
+
+const mongoose = require("mongoose");
+
+mongoose.connect("mongodb+srv://sudeep_manasali:Sudeep%401234@googleformclone.urebd.mongodb.net/google_form_clone?retryWrites=true&w=majority")
+  .then(() => {
+    logger.info("coneection succeeded");
+    console.log(server);
+  })
+  .catch((err) => {
+    logger.error("connection failed", err);
+    logger.error("same conectiin fialed");
+    process.exit();
+  });
+
+// const mongoose = require("mongoose");
+// // mongoose.connect("mongodb+srv://sudeep_manasali:Sudeep%401234@googleformclone.urebd.mongodb.net/google_form_clone?retryWrites=true&w=majority")
+
+// // mongoose.connect("mongodb+srv://ameerfahadmca22:ameerfahadmca22@forms.ep9emns.mongodb.net/")
+// mongoose.connect("mongodb+srv://CollegeLogin:CollegeLogin@firstcluster.zr33pxh.mongodb.net/?retryWrites=true&w=majority&appName=Forms")
+// .then(() => {
+//   logger.info("Connection succeeded");
+//   const server = app.listen(process.env.PORT || 9000, () => {
+//     logger.info("Server started successfully");
+//   });
+//   console.log(server);
+// })
+// .catch((err) => {
+//   logger.error("Connection failed", err);
+//   process.exit(1);
+// });
